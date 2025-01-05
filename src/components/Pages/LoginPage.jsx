@@ -1,3 +1,4 @@
+import { Link, useNavigate } from "react-router-dom";
 import assets from "../../assets";
 
 const LoginPage = () => {
@@ -151,7 +152,7 @@ const LoginPage = () => {
             <a
               href="/forgot-password"
               style={{
-                color: "#23D693",
+                color: "#808191",
                 textDecoration: "none",
               }}
             >
@@ -179,7 +180,7 @@ const LoginPage = () => {
           <a
             href="/register"
             style={{
-              color: "#23D693",
+              color: "#FFF",
               textDecoration: "none",
             }}
           >

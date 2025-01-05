@@ -1,4 +1,6 @@
-import LoginPage from "./components/Pages/LoginPage"; // Adjust path if needed
+// import LoginPage from "./components/Pages/LoginPage"; 
+// import RegisterPage from "./components/Pages/RegisterPage"; 
+import LandingPage from "./components/Pages/LandingPage"; 
 
 const App = () => {
   return (
@@ -18,7 +20,9 @@ const App = () => {
         `}
       </style>
       <div>
-        <LoginPage />
+        {/* <LoginPage />
+        <RegisterPage /> */}
+        <LandingPage />
       </div>
     </>
   );
