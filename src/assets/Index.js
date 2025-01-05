@@ -10,6 +10,8 @@ import TheAdvantages from './TheAdvantages.png';
 import TheirThoughts from './TheirThoughts.png';
 import ProfilePicture from './ProfilePicture.png';
 import CommonQuestions from './CommonQuestions.png';
+import TheoryExam from './TheoryExam.png';
+import PracticalExam from './PracticalExam.png';
 
 export default {
   GoogleIcon,
@@ -24,4 +26,6 @@ export default {
   TheirThoughts,
   ProfilePicture,
   CommonQuestions,
+  TheoryExam,
+  PracticalExam,
 };
