@@ -1,7 +1,7 @@
 // import LoginPage from "./components/Pages/LoginPage"; 
 // import RegisterPage from "./components/Pages/RegisterPage"; 
-// import LandingPage from "./components/Pages/LandingPage"; 
-import ABRSMCurriculumPage from "./components/Pages/ABRSMCurriculumPage"; 
+import LandingPage from "./components/Pages/LandingPage"; 
+// import ABRSMCurriculumPage from "./components/Pages/ABRSMCurriculumPage"; 
 
 const App = () => {
   return (
@@ -21,9 +21,10 @@ const App = () => {
         `}
       </style>
       <div>
-        {/* <LoginPage />
-        <RegisterPage /> */}
-        <ABRSMCurriculumPage />
+        {/* <LoginPage /> */}
+        {/* <RegisterPage /> */}
+        <LandingPage />
+        {/* <ABRSMCurriculumPage /> */}
       </div>
     </>
   );
