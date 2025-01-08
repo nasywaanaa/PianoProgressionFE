@@ -1,11 +1,12 @@
-
-import assets from "../../assets";
+import GoogleIcon from '../../assets/GoogleIcon.png';
+import BackgroundPiano from '../../assets/BackgroundPiano.png';
+import LogoPianoProgressionRemoved from '../../assets/LogoPianoProgressionRemoved.png';
 
 const LoginPage = () => {
   return (
     <div
       style={{
-        backgroundImage: `url(${assets.BackgroundPiano})`,
+        backgroundImage: `url(${BackgroundPiano})`,
         backgroundSize: "cover",
         backgroundPosition: "center",
         height: "100vh",
@@ -39,13 +40,13 @@ const LoginPage = () => {
       >
         <div style={{ marginBottom: "20px" }}>
           <img
-            src={assets.LogoPianoProgressionRemoved}
+            src={LogoPianoProgressionRemoved}
             alt="Piano Progression Logo"
             style={{
-                width: "198px",
-                height: "auto",
-                display: "block", 
-                margin: "0 auto", 
+              width: "198px",
+              height: "auto",
+              display: "block",
+              margin: "0 auto",
             }}
           />
         </div>
@@ -54,52 +55,51 @@ const LoginPage = () => {
         </h2>
         <p style={{ margin: "10px 0", color: "#808191" }}>Your Piano Tracker</p>
         <button
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            backgroundColor: "transparent",
+            border: "none",
+            borderRadius: "6px",
+            padding: "10px 20px",
+            width: "100%",
+            margin: "20px 0",
+            cursor: "pointer",
+            position: "relative",
+            fontSize: "16px",
+            color: "#fff",
+            textTransform: "capitalize",
+            overflow: "hidden",
+          }}
+        >
+          <span
             style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                backgroundColor: "transparent",
-                border: "none", 
-                borderRadius: "6px",
-                padding: "10px 20px",
-                width: "100%", 
-                margin: "20px 0",
-                cursor: "pointer",
-                position: "relative",
-                fontSize: "16px",
-                color: "#fff", 
-                textTransform: "capitalize",
-                overflow: "hidden",
+              position: "absolute",
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              borderRadius: "6px",
+              padding: "1px",
+              background: "linear-gradient(40deg, #23D693, #279EFF)",
+              WebkitMask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
+              maskComposite: "exclude",
+              zIndex: 0,
             }}
-            >
-            <span
-                style={{
-                content: '""',
-                position: "absolute",
-                top: 0,
-                left: 0,
-                right: 0,
-                bottom: 0,
-                borderRadius: "6px",
-                padding: "1px", 
-                background: "linear-gradient(40deg, #23D693, #279EFF)", 
-                WebkitMask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
-                maskComposite: "exclude",
-                zIndex: 0,
-                }}
-            ></span>
+          ></span>
 
-            <img
-                src={assets.GoogleIcon}
-                alt="Google Logo"
-                style={{
-                width: "20px",
-                marginRight: "10px",
-                zIndex: 1, 
-                }}
-            />
-            <span style={{ zIndex: 1 }}>Login with Google</span>
-            </button>
+          <img
+            src={GoogleIcon}
+            alt="Google Logo"
+            style={{
+              width: "20px",
+              marginRight: "10px",
+              zIndex: 1,
+            }}
+          />
+          <span style={{ zIndex: 1 }}>Login with Google</span>
+        </button>
 
         <p style={{ margin: "10px 0", color: "#808191" }}>OR</p>
         <form style={{ display: "flex", flexDirection: "column" }}>
@@ -107,34 +107,26 @@ const LoginPage = () => {
             type="text"
             placeholder="Username"
             style={{
-                padding: "10px",
-                margin: "10px 0",
-                border: "1px solid #fff",
-                backgroundColor: "transparent",
-                color: "#fff",
-                borderRadius: "6px",
-                outline: "none",
-                "::placeholder": {
-                color: "#fff", 
-                opacity: 0.7, 
-                },
+              padding: "10px",
+              margin: "10px 0",
+              border: "1px solid #fff",
+              backgroundColor: "transparent",
+              color: "#fff",
+              borderRadius: "6px",
+              outline: "none",
             }}
           />
           <input
             type="password"
             placeholder="Password"
             style={{
-                padding: "10px",
-                margin: "10px 0",
-                border: "1px solid #fff",
-                backgroundColor: "transparent",
-                color: "#fff",
-                borderRadius: "6px",
-                outline: "none",
-                "::placeholder": {
-                color: "#fff", 
-                opacity: 0.7, 
-                },
+              padding: "10px",
+              margin: "10px 0",
+              border: "1px solid #fff",
+              backgroundColor: "transparent",
+              color: "#fff",
+              borderRadius: "6px",
+              outline: "none",
             }}
           />
           <div

@@ -1,7 +1,6 @@
 import { useState } from "react";
 
 import assets from "../../assets";
-
 const LandingPage = () => {
     const [isBlurred, setIsBlurred] = useState(true);
     const [activeFAQ, setActiveFAQ] = useState(null);
