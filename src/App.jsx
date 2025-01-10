@@ -1,4 +1,3 @@
-import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 // Import pages
@@ -6,6 +5,7 @@ import LoginPage from "./components/Pages/LoginPage.jsx";
 import RegisterPage from "./components/Pages/RegisterPage.jsx";
 import LandingPage from "./components/Pages/LandingPage.jsx";
 import ABRSMCurriculumPage from "./components/Pages/ABRSMCurriculumPage.jsx";
+import PracticePathway from "./components/Pages/PracticePathway.jsx";
 // import SchedulePage from "./pages/SchedulePage";
 // import TaskPage from "./pages/TaskPage";
 
@@ -33,6 +33,7 @@ const App = () => {
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/landing" element={<LandingPage />} />
         <Route path="/curriculum" element={<ABRSMCurriculumPage />} />
+        <Route path="/practice" element={<PracticePathway />} />
         {/* <Route path="/" element={<Login />} /> */}
         {/* <Route path="/login" element={<Login />} /> */}
         {/* <Route path="/signup" element={<Signup />} /> */}

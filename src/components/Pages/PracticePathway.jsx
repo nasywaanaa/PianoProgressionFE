@@ -1,8 +1,20 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import LogoPianoProgressionRemoved from "../../assets/LogoPianoProgressionRemoved.png";
 
 const PracticePathway = () => {
-  const [selectedTab, setSelectedTab] = useState("All");
+  
+  const [showPopup, setShowPopup] = useState(false);
+
+  const togglePopup = () => {
+    setShowPopup(!showPopup);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Handle form submission logic here
+    console.log("Schedule added!");
+    setShowPopup(false);
+  };
 
   const tasks = [
     {
@@ -18,20 +30,6 @@ const PracticePathway = () => {
       time: "23.59 WIB",
       composer: "Alexander Gretchaninov",
       status: "Submitted",
-    },
-    {
-      date: "14 NOV 2024",
-      title: "C1 - Dancing Barefoot in the Rain (from African Sketches)",
-      time: "23.59 WIB",
-      composer: "Robert Thompson",
-      status: "Unanswered",
-    },
-    {
-      date: "18 NOV 2024",
-      title: "A2 - Sonata alla Scarlatti",
-      time: "23.59 WIB",
-      composer: "Germaine Tailleferre",
-      status: "Unanswered",
     },
   ];
 
@@ -56,11 +54,7 @@ const PracticePathway = () => {
           zIndex: 1000,
         }}
       >
-        <img
-          src={LogoPianoProgressionRemoved}
-          alt="Piano Progression Logo"
-          style={{ width: "120px" }}
-        />
+        <img src={LogoPianoProgressionRemoved} alt="Piano Progression Logo" style={{ width: "120px" }} />
         <ul
           style={{
             display: "flex",
@@ -73,14 +67,7 @@ const PracticePathway = () => {
           {["ABRSM Navigator", "Practice Pathway", "Progress Visionary", "Interactive Essentials"].map(
             (item) => (
               <li key={item}>
-                <a
-                  href="#"
-                  style={{
-                    color: "#808191",
-                    textDecoration: "none",
-                    fontSize: "16px",
-                  }}
-                >
+                <a href="#" style={{ color: "#808191", textDecoration: "none", fontSize: "16px" }}>
                   {item}
                 </a>
               </li>
@@ -89,109 +76,11 @@ const PracticePathway = () => {
         </ul>
       </nav>
 
-      {/* Calendar */}
-      <div style={{ marginTop: "100px", padding: "20px" }}>
-        <div
-          style={{
-            backgroundColor: "#000",
-            borderRadius: "10px",
-            padding: "20px",
-            marginBottom: "20px",
-          }}
-        >
-          <h3
-            style={{
-              color: "#23D693",
-              textAlign: "center",
-              fontSize: "24px",
-              fontWeight: "600",
-            }}
-          >
-            November 2024
-          </h3>
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(7, 1fr)",
-              color: "#808191",
-              marginTop: "20px",
-              textAlign: "center",
-            }}
-          >
-            {["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"].map(
-              (day) => (
-                <div key={day}>{day}</div>
-              )
-            )}
-          </div>
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(7, 1fr)",
-              gap: "5px",
-              marginTop: "20px",
-            }}
-          >
-            {Array.from({ length: 30 }, (_, index) => (
-              <div
-                key={index}
-                style={{
-                  padding: "10px",
-                  borderRadius: "5px",
-                  backgroundColor: index === 2 ? "#23D693" : "transparent",
-                  textAlign: "center",
-                  color: "#fff",
-                  cursor: "pointer",
-                }}
-              >
-                {index + 1}
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-
       {/* Task Tabs */}
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          margin: "20px 0",
-        }}
-      >
-        <div style={{ display: "flex", gap: "20px" }}>
-          {["All", "Date", "Urgent Task"].map((tab) => (
-            <button
-              key={tab}
-              onClick={() => setSelectedTab(tab)}
-              style={{
-                backgroundColor: selectedTab === tab ? "#23D693" : "transparent",
-                color: selectedTab === tab ? "#fff" : "#808191",
-                border: "none",
-                borderRadius: "5px",
-                padding: "10px 20px",
-                cursor: "pointer",
-              }}
-            >
-              {tab}
-            </button>
-          ))}
-        </div>
-        <div style={{ display: "flex", gap: "10px" }}>
+      <div style={{ marginTop: "100px", padding: "20px" }}>
+        <div style={{ display: "flex", justifyContent: "flex-end" }}>
           <button
-            style={{
-              backgroundColor: "transparent",
-              color: "#808191",
-              border: "1px solid #808191",
-              borderRadius: "5px",
-              padding: "10px 20px",
-              cursor: "pointer",
-            }}
-          >
-            All Dates
-          </button>
-          <button
+            onClick={togglePopup}
             style={{
               backgroundColor: "#23D693",
               color: "#fff",
@@ -230,6 +119,182 @@ const PracticePathway = () => {
           </div>
         ))}
       </div>
+
+      {/* Pop-Up */}
+      {showPopup && (
+        <div
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            backgroundColor: "rgba(0, 0, 0, 0.8)",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            zIndex: 1000,
+          }}
+        >
+          <div
+            style={{
+              backgroundColor: "#111",
+              padding: "30px",
+              borderRadius: "10px",
+              width: "500px",
+              boxShadow: "0 4px 10px rgba(0, 0, 0, 0.3)",
+              color: "#fff",
+            }}
+          >
+            <h2 style={{ textAlign: "center", marginBottom: "20px" }}>Add Schedule</h2>
+            <form onSubmit={handleSubmit}>
+              <div style={{ marginBottom: "15px" }}>
+                <label style={{ display: "block", marginBottom: "5px" }}>Song Title</label>
+                <input
+                  type="text"
+                  placeholder="Song Title"
+                  required
+                  style={{
+                    width: "100%",
+                    padding: "10px",
+                    border: "1px solid #444",
+                    borderRadius: "5px",
+                    backgroundColor: "transparent",
+                    color: "#fff",
+                  }}
+                />
+              </div>
+              <div style={{ marginBottom: "15px" }}>
+                <label style={{ display: "block", marginBottom: "5px" }}>Song Writer</label>
+                <input
+                  type="text"
+                  placeholder="Song Writer"
+                  required
+                  style={{
+                    width: "100%",
+                    padding: "10px",
+                    border: "1px solid #444",
+                    borderRadius: "5px",
+                    backgroundColor: "transparent",
+                    color: "#fff",
+                  }}
+                />
+              </div>
+              <div style={{ marginBottom: "15px" }}>
+                <label style={{ display: "block", marginBottom: "5px" }}>Grade</label>
+                <select
+                  required
+                  style={{
+                    width: "100%",
+                    padding: "10px",
+                    border: "1px solid #444",
+                    borderRadius: "5px",
+                    backgroundColor: "transparent",
+                    color: "#fff",
+                  }}
+                >
+                  <option value="" disabled selected>
+                    Choose Grade
+                  </option>
+                  <option value="Grade 1">Grade 1</option>
+                  <option value="Grade 2">Grade 2</option>
+                  <option value="Grade 3">Grade 3</option>
+                  <option value="Grade 4">Grade 4</option>
+                  <option value="Grade 5">Grade 5</option>
+                  <option value="Grade 6">Grade 6</option>
+                  <option value="Grade 7">Grade 7</option>
+                  <option value="Grade 8">Grade 8</option>
+                </select>
+              </div>
+              <div style={{ marginBottom: "15px" }}>
+                <label style={{ display: "block", marginBottom: "5px" }}>Additional Material</label>
+                <input
+                  type="text"
+                  placeholder="Additional Material"
+                  style={{
+                    width: "100%",
+                    padding: "10px",
+                    border: "1px solid #444",
+                    borderRadius: "5px",
+                    backgroundColor: "transparent",
+                    color: "#fff",
+                  }}
+                />
+              </div>
+              <div style={{ marginBottom: "15px" }}>
+                <label style={{ display: "block", marginBottom: "5px" }}>Additional Notes</label>
+                <textarea
+                  placeholder="Additional Notes"
+                  style={{
+                    width: "100%",
+                    padding: "10px",
+                    border: "1px solid #444",
+                    borderRadius: "5px",
+                    backgroundColor: "transparent",
+                    color: "#fff",
+                    resize: "none",
+                  }}
+                ></textarea>
+              </div>
+              <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "15px" }}>
+                <input
+                  type="date"
+                  required
+                  style={{
+                    width: "48%",
+                    padding: "10px",
+                    border: "1px solid #444",
+                    borderRadius: "5px",
+                    backgroundColor: "transparent",
+                    color: "#fff",
+                  }}
+                />
+                <input
+                  type="time"
+                  required
+                  style={{
+                    width: "48%",
+                    padding: "10px",
+                    border: "1px solid #444",
+                    borderRadius: "5px",
+                    backgroundColor: "transparent",
+                    color: "#fff",
+                  }}
+                />
+              </div>
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <button
+                  type="button"
+                  onClick={togglePopup}
+                  style={{
+                    backgroundColor: "#444",
+                    color: "#fff",
+                    padding: "10px 20px",
+                    borderRadius: "5px",
+                    border: "none",
+                    cursor: "pointer",
+                  }}
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  style={{
+                    backgroundColor: "#23D693",
+                    color: "#fff",
+                    padding: "10px 20px",
+                    borderRadius: "5px",
+                    border: "none",
+                    cursor: "pointer",
+                  }}
+                >
+                  Add
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
