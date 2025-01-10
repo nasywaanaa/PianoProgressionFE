@@ -1,6 +1,41 @@
+import React, { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import assets from "../../assets";
 
 const RegisterPage = () => {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError("");
+
+    try {
+      // Kirim data ke backend menggunakan Axios
+      const response = await axios.post("https://api.pianoprogression.web.id/register", formData);
+
+      if (response.status === 201) {
+        alert("Registration successful!");
+        navigate("/login"); // Redirect ke halaman login setelah registrasi berhasil
+      }
+    } catch (err) {
+      setError(err.response?.data?.message || "An error occurred during registration.");
+    }
+  };
+
   return (
     <div
       style={{
@@ -8,8 +43,8 @@ const RegisterPage = () => {
         justifyContent: "space-between",
         alignItems: "center",
         height: "100vh",
-        backgroundColor: "#000", 
-        color: "#fff", 
+        backgroundColor: "#000",
+        color: "#fff",
         padding: "0 10%",
         fontFamily: "'Poppins', sans-serif",
       }}
@@ -19,10 +54,10 @@ const RegisterPage = () => {
           <img
             src={assets.LogoPianoProgressionRemoved}
             alt="Piano Progression Logo"
-            style={{ 
-                width: "408px", 
-                height: "auto", 
-                marginBottom: "0px" 
+            style={{
+              width: "408px",
+              height: "auto",
+              marginBottom: "0px",
             }}
           />
         </div>
@@ -32,11 +67,10 @@ const RegisterPage = () => {
             fontWeight: "300",
             margin: "10px 0",
             color: "#FFF",
-            fontStyle: "italic", 
+            fontStyle: "italic",
             paddingBottom: "5px",
-            borderBottom: "3px solid #FFF", 
-            display: "inline-block", 
-            
+            borderBottom: "3px solid #FFF",
+            display: "inline-block",
           }}
         >
           Piano Tracker for ABRSM
@@ -51,25 +85,8 @@ const RegisterPage = () => {
           }}
         >
           <strong>Piano Progression</strong> is a platform designed to support
-          piano learning, particularly for users aiming to achieve ABRSM
-          (Associated Board of the Royal Schools of Music) certification,
-          assisting them on their journey to mastering the piano from Grade 1
-          to Grade 8.
+          piano learning, particularly for users aiming to achieve ABRSM certification.
         </p>
-        <button
-          style={{
-            backgroundColor: "#23D693",
-            color: "#fff",
-            border: "none",
-            borderRadius: "6px",
-            padding: "10px 20px",
-            fontSize: "16px",
-            marginTop: "20px",
-            cursor: "pointer",
-          }}
-        >
-          Learn More
-        </button>
       </div>
 
       <div
@@ -91,68 +108,18 @@ const RegisterPage = () => {
         >
           Register Your Account
         </h2>
-        <p
-          style={{
-            marginBottom: "20px",
-            textAlign: "center",
-            color: "#808191",
-            fontSize: "16px",
-          }}
-        >
-          Your Piano Tracker
-        </p>
-        <button
-            style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                backgroundColor: "transparent",
-                border: "none", 
-                borderRadius: "6px",
-                padding: "10px 20px",
-                width: "100%", 
-                margin: "20px 0",
-                cursor: "pointer",
-                position: "relative",
-                fontSize: "16px",
-                color: "#fff", 
-                textTransform: "capitalize",
-                overflow: "hidden",
-            }}
-            >
-            <span
-                style={{
-                content: '""',
-                position: "absolute",
-                top: 0,
-                left: 0,
-                right: 0,
-                bottom: 0,
-                borderRadius: "6px",
-                padding: "1px", 
-                background: "linear-gradient(40deg, #23D693, #279EFF)", 
-                WebkitMask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
-                maskComposite: "exclude",
-                zIndex: 0,
-                }}
-            ></span>
-
-            <img
-                src={assets.GoogleIcon}
-                alt="Google Logo"
-                style={{
-                width: "20px",
-                marginRight: "10px",
-                zIndex: 1, 
-                }}
-            />
-            <span style={{ zIndex: 1 }}>Register with Google</span>
-            </button>
-        <p style={{ textAlign: "center", marginBottom: "10px", color: "#808191" }}>OR</p>
-        <form style={{ display: "flex", flexDirection: "column" }}>
+        {error && (
+          <p style={{ color: "red", textAlign: "center", marginBottom: "10px" }}>
+            {error}
+          </p>
+        )}
+        <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column" }}>
           <input
             type="text"
+            name="name"
             placeholder="Name"
+            value={formData.name}
+            onChange={handleChange}
             style={{
               padding: "10px",
               margin: "10px 0",
@@ -164,8 +131,11 @@ const RegisterPage = () => {
             }}
           />
           <input
-            type="text"
-            placeholder="Username"
+            type="email"
+            name="email"
+            placeholder="Email"
+            value={formData.email}
+            onChange={handleChange}
             style={{
               padding: "10px",
               margin: "10px 0",
@@ -178,7 +148,10 @@ const RegisterPage = () => {
           />
           <input
             type="password"
+            name="password"
             placeholder="Password"
+            value={formData.password}
+            onChange={handleChange}
             style={{
               padding: "10px",
               margin: "10px 0",
@@ -189,29 +162,6 @@ const RegisterPage = () => {
               outline: "none",
             }}
           />
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              fontSize: "16px",
-              color: "#808191",
-              margin: "10px 0",
-            }}
-          >
-            <label>
-              <input type="checkbox" /> Remember Me
-            </label>
-            <a
-              href="/forgot-password"
-              style={{
-                color: "#808191",
-                textDecoration: "none",
-              }}
-            >
-              Forgot Password?
-            </a>
-          </div>
           <button
             type="submit"
             style={{
@@ -225,7 +175,7 @@ const RegisterPage = () => {
               marginTop: "10px",
             }}
           >
-            Login to Your Account
+            Register
           </button>
         </form>
         <p
