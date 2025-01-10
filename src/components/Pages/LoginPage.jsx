@@ -1,8 +1,39 @@
-import GoogleIcon from '../../assets/GoogleIcon.png';
-import BackgroundPiano from '../../assets/BackgroundPiano.png';
-import LogoPianoProgressionRemoved from '../../assets/LogoPianoProgressionRemoved.png';
+import React, { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
+import GoogleIcon from "../../assets/GoogleIcon.png";
+import BackgroundPiano from "../../assets/BackgroundPiano.png";
+import LogoPianoProgressionRemoved from "../../assets/LogoPianoProgressionRemoved.png";
 
 const LoginPage = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const navigate = useNavigate();
+
+  const handleLogin = async (e) => {
+    e.preventDefault(); // Mencegah reload halaman
+    try {
+      const response = await axios.post("https://api.pianoprogression.web.id/login", {
+        email,
+        password,
+      });
+
+      // Jika login berhasil
+      const { token, isAdmin } = response.data.data;
+      localStorage.setItem("token", token); // Simpan token di localStorage
+      if (isAdmin) {
+        navigate("/admin-dashboard"); // Navigasi ke dashboard admin jika pengguna admin
+      } else {
+        navigate("/landing"); // Navigasi ke halaman landing
+      }
+    } catch (error) {
+      // Menangkap error dari backend
+      setErrorMessage(error.response?.data?.message || "Login failed. Please try again.");
+    }
+  };
+
   return (
     <div
       style={{
@@ -54,58 +85,17 @@ const LoginPage = () => {
           Login to Your Account
         </h2>
         <p style={{ margin: "10px 0", color: "#808191" }}>Your Piano Tracker</p>
-        <button
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            backgroundColor: "transparent",
-            border: "none",
-            borderRadius: "6px",
-            padding: "10px 20px",
-            width: "100%",
-            margin: "20px 0",
-            cursor: "pointer",
-            position: "relative",
-            fontSize: "16px",
-            color: "#fff",
-            textTransform: "capitalize",
-            overflow: "hidden",
-          }}
-        >
-          <span
-            style={{
-              position: "absolute",
-              top: 0,
-              left: 0,
-              right: 0,
-              bottom: 0,
-              borderRadius: "6px",
-              padding: "1px",
-              background: "linear-gradient(40deg, #23D693, #279EFF)",
-              WebkitMask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
-              maskComposite: "exclude",
-              zIndex: 0,
-            }}
-          ></span>
 
-          <img
-            src={GoogleIcon}
-            alt="Google Logo"
-            style={{
-              width: "20px",
-              marginRight: "10px",
-              zIndex: 1,
-            }}
-          />
-          <span style={{ zIndex: 1 }}>Login with Google</span>
-        </button>
+        {errorMessage && (
+          <p style={{ color: "red", marginBottom: "10px" }}>{errorMessage}</p>
+        )}
 
-        <p style={{ margin: "10px 0", color: "#808191" }}>OR</p>
-        <form style={{ display: "flex", flexDirection: "column" }}>
+        <form style={{ display: "flex", flexDirection: "column" }} onSubmit={handleLogin}>
           <input
-            type="text"
-            placeholder="Username"
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             style={{
               padding: "10px",
               margin: "10px 0",
@@ -115,10 +105,13 @@ const LoginPage = () => {
               borderRadius: "6px",
               outline: "none",
             }}
+            required
           />
           <input
             type="password"
             placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             style={{
               padding: "10px",
               margin: "10px 0",
@@ -128,6 +121,7 @@ const LoginPage = () => {
               borderRadius: "6px",
               outline: "none",
             }}
+            required
           />
           <div
             style={{

@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import assets from "../../assets";
-
+import LogoPianoProgressionRemoved from '../../assets/LogoPianoProgressionRemoved.png';
+ 
 const RegisterPage = () => {
   const [formData, setFormData] = useState({
     name: "",
@@ -52,7 +52,7 @@ const RegisterPage = () => {
       <div style={{ width: "45%" }}>
         <div>
           <img
-            src={assets.LogoPianoProgressionRemoved}
+            src={LogoPianoProgressionRemoved}
             alt="Piano Progression Logo"
             style={{
               width: "408px",

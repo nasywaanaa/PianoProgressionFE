@@ -1,6 +1,15 @@
 import { useState } from "react";
 
-import assets from "../../assets";
+import LogoPianoProgressionRemoved from '../../assets/LogoPianoProgressionRemoved.png';
+import BackgroundPianoBlack from '../../assets/BackgroundPianoBlack.png';
+import Icon1LandingPage from '../../assets/Icon1LandingPage.png';
+import Icon2LandingPage from '../../assets/Icon2LandingPage.png';
+import Icon3LandingPage from '../../assets/Icon3LandingPage.png';
+import Icon4LandingPage from '../../assets/Icon4LandingPage.png';
+import TheAdvantages from '../../assets/TheAdvantages.png';
+import TheirThoughts from '../../assets/TheirThoughts.png';
+import ProfilePicture from '../../assets/ProfilePicture.png';
+import CommonQuestions from '../../assets/CommonQuestions.png';
 const LandingPage = () => {
     const [isBlurred, setIsBlurred] = useState(true);
     const [activeFAQ, setActiveFAQ] = useState(null);
@@ -25,7 +34,7 @@ return (
         }}
     >
         <img
-        src={assets.LogoPianoProgressionRemoved}
+        src={LogoPianoProgressionRemoved}
         alt="Piano Progression Logo"
         style={{ width: "120px" }}
         />
@@ -87,7 +96,7 @@ return (
 
     <div
         style={{
-        backgroundImage: `url(${assets.BackgroundPianoBlack})`,
+        backgroundImage: `url(${BackgroundPianoBlack})`,
         backgroundSize: "cover",
         backgroundPosition: "center",
         height: "100vh",
@@ -99,7 +108,7 @@ return (
     >
         <div style={{ maxWidth: "600px" }}>
         <img
-            src={assets.LogoPianoProgressionRemoved}
+            src={LogoPianoProgressionRemoved}
             alt="Piano Progression Logo"
             style={{ width: "300px", marginBottom: "20px" }}
         />
@@ -166,25 +175,25 @@ return (
             title: "ABRSM Navigator",
             description:
                 "Provides a guide for tracking progress based on the ABRSM curriculum and learning music theory through interactive quizzes and flashcards.",
-            icon: assets.Icon1LandingPage, 
+            icon: Icon1LandingPage, 
             },
             {
             title: "Practice Pathway",
             description:
                 "Combines the ABRSM curriculum tracker with a daily practice planner to create a focused and structured practice schedule.",
-            icon: assets.Icon2LandingPage, 
+            icon: Icon2LandingPage, 
             },
             {
             title: "Progress Visionary",
             description:
                 "Offers graphical progress visualization and in-depth evaluations through feedback from a virtual tutor.",
-            icon: assets.Icon3LandingPage, 
+            icon: Icon3LandingPage, 
             },
             {
             title: "Interactive Essentials",
             description:
                 "Focuses on enhancing sight-reading and aural skills with the addition of quizzes and flashcards to master music theory.",
-            icon: assets.Icon4LandingPage, 
+            icon: Icon4LandingPage, 
             },
         ].map((feature, index) => (
             <div
@@ -269,7 +278,7 @@ return (
         >
         <div style={{ flex: 1, textAlign: "center" }}>
             <img
-            src={assets.TheAdvantages}
+            src={TheAdvantages}
             alt="The Advantages"
             style={{
                 width: "440px",
@@ -358,7 +367,7 @@ return (
             }}
             >
             <img
-                src={assets.TheirThoughts}
+                src={TheirThoughts}
                 alt="Their Thoughts"
                 style={{ 
                     width: "380px" 
@@ -381,21 +390,21 @@ return (
             {
             name: "Kevin Sebastian",
             role: "Student Grade 6",
-            avatar: assets.ProfilePicture,
+            avatar: ProfilePicture,
             testimonial:
                 "Piano Progression has completely transformed the way I learn piano. The ABRSM curriculum tracker keeps me on track and the virtual tutor's feedback is incredibly helpful.",
             },
             {
             name: "Auvarifqi",
             role: "Student Grade 6",
-            avatar: assets.ProfilePicture,
+            avatar: ProfilePicture,
             testimonial:
                 "As a teacher, I recommend Piano Progression to all of my students. The platform complements my lessons perfectly, providing students with the tools they need to practice.",
             },
             {
             name: "Ahmad Rizki",
             role: "Student Grade 6",
-            avatar: assets.ProfilePicture,
+            avatar: ProfilePicture,
             testimonial:
                 "I started learning piano and Piano Progression has been my go-to resource. The step-by-step approach and supportive community make it easy to stay motivated.",
             },
@@ -489,7 +498,7 @@ return (
         {/* FAQ Title */}
         <div style={{ textAlign: "center", marginBottom: "50px" }}>
             <img
-            src={assets.CommonQuestions}
+            src={CommonQuestions}
             alt="Common Questions"
             style={{ width: "380px", marginBottom: "20px" }}
             />
@@ -547,7 +556,7 @@ return (
                 >
                 <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
                     <img
-                    src={assets.Icon1LandingPage}
+                    src={Icon1LandingPage}
                     alt="FAQ Icon"
                     style={{ width: "24px", height: "24px" }}
                     />
