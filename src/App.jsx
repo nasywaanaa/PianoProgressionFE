@@ -39,6 +39,7 @@ const App = () => {
       </style>
       <Routes>
         {/* Public Routes */}
+        <Route path="/" element={<LoginPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
 
