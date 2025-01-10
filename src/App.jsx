@@ -7,6 +7,7 @@ import RegisterPage from "./components/Pages/RegisterPage.jsx";
 import LandingPage from "./components/Pages/LandingPage.jsx";
 import ABRSMCurriculumPage from "./components/Pages/ABRSMCurriculumPage.jsx";
 import PracticePathway from "./components/Pages/PracticePathway.jsx";
+import TaskManager from "./components/Pages/TaskManager.jsx";
 
 // Higher-order component for route protection
 const ProtectedRoute = ({ children }) => {
@@ -42,6 +43,9 @@ const App = () => {
         <Route path="/" element={<LoginPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
+        <Route path="/task" element={<TaskManager />} />
+
+        
 
         {/* Protected Routes */}
         <Route
