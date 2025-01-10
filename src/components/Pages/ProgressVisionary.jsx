@@ -6,26 +6,18 @@ const PracticePathway = () => {
   const [formData, setFormData] = useState({
     title: "",
     writer: "",
-    deadlineDate: "",
-    deadlineTime: "",
+    deadline: "",
     grade: "",
     additionalMaterial: "",
     notes: "",
   });
-  const [message, setMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
 
   const togglePopup = () => {
     setShowPopup(!showPopup);
-    setMessage("");
-    setFormData({
-      title: "",
-      writer: "",
-      deadlineDate: "",
-      deadlineTime: "",
-      grade: "",
-      additionalMaterial: "",
-      notes: "",
-    });
+    setErrorMessage("");
+    setSuccessMessage("");
   };
 
   const handleChange = (e) => {
@@ -38,18 +30,11 @@ const PracticePathway = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setMessage("");
-  
-    const accountId = localStorage.getItem("accountId"); // Ambil accountId dari localStorage
-    const token = localStorage.getItem("token"); // Ambil token dari localStorage
-  
-    if (!token || !accountId) {
-      setMessage("You are not authorized. Please log in.");
-      return;
-    }
-  
-    const deadline = `${formData.deadlineDate}T${formData.deadlineTime}:00.000Z`;
-  
+
+    // Masukkan account ID dan token dari sesi login
+    const accountId = "YOUR_ACCOUNT_ID"; // Ganti dengan ID akun pengguna yang terlogin
+    const token = "YOUR_BEARER_TOKEN"; // Ganti dengan token otorisasi pengguna
+
     try {
       const response = await fetch(`https://api.pianoprogression.web.id/tasks/${accountId}`, {
         method: "POST",
@@ -57,45 +42,29 @@ const PracticePathway = () => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ ...formData, deadline }),
+        body: JSON.stringify(formData),
       });
-  
+
       const data = await response.json();
-  
+
       if (response.ok) {
-        setMessage("Task added successfully!");
-        togglePopup(); // Tutup popup setelah sukses
+        setSuccessMessage("Task added successfully!");
+        setFormData({
+          title: "",
+          writer: "",
+          deadline: "",
+          grade: "",
+          additionalMaterial: "",
+          notes: "",
+        });
+        setShowPopup(false);
       } else {
-        setMessage(data.message || "Failed to add task.");
+        setErrorMessage(data.message || "Failed to add task.");
       }
     } catch (error) {
-      setMessage("Network error: Unable to add task.");
+      setErrorMessage("Network error: Unable to add task.");
       console.error("Error:", error);
     }
-  };
-  
-
-  const tasks = [
-    {
-      date: "12 NOV 2024",
-      title: "A2 - Sonata alla Scarlatti",
-      time: "23.59 WIB",
-      composer: "Germaine Tailleferre",
-      status: "Submitted",
-    },
-    {
-      date: "12 NOV 2024",
-      title: "B1 - Prelude in D-flat (No. 1 from 8 Easy Pieces, Op. 43)",
-      time: "23.59 WIB",
-      composer: "Alexander Gretchaninov",
-      status: "Submitted",
-    },
-  ];
-
-  const getStatusStyle = (status) => {
-    return status === "Submitted"
-      ? { backgroundColor: "#23D693", color: "#fff", padding: "5px 10px", borderRadius: "5px" }
-      : { backgroundColor: "#E74C3C", color: "#fff", padding: "5px 10px", borderRadius: "5px" };
   };
 
   return (
@@ -152,31 +121,6 @@ const PracticePathway = () => {
             Add Task
           </button>
         </div>
-      </div>
-
-      {/* Tasks List */}
-      <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
-        {tasks.map((task, index) => (
-          <div
-            key={index}
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              backgroundColor: "#111",
-              padding: "20px",
-              borderRadius: "10px",
-              boxShadow: "0 4px 10px rgba(0, 0, 0, 0.2)",
-            }}
-          >
-            <div>
-              <h4 style={{ margin: "0 0 5px 0", color: "#23D693" }}>{task.date}</h4>
-              <h5 style={{ margin: "0 0 5px 0", color: "#fff" }}>{task.title}</h5>
-              <p style={{ margin: "0", color: "#808191" }}>{task.composer}</p>
-            </div>
-            <span style={getStatusStyle(task.status)}>{task.status}</span>
-          </div>
-        ))}
       </div>
 
       {/* Pop-Up */}
@@ -243,43 +187,23 @@ const PracticePathway = () => {
                   }}
                 />
               </div>
-              <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "15px" }}>
-                <div style={{ width: "48%" }}>
-                  <label style={{ display: "block", marginBottom: "5px" }}>Deadline Date</label>
-                  <input
-                    type="date"
-                    name="deadlineDate"
-                    value={formData.deadlineDate}
-                    onChange={handleChange}
-                    required
-                    style={{
-                      width: "100%",
-                      padding: "10px",
-                      border: "1px solid #444",
-                      borderRadius: "5px",
-                      backgroundColor: "transparent",
-                      color: "#fff",
-                    }}
-                  />
-                </div>
-                <div style={{ width: "48%" }}>
-                  <label style={{ display: "block", marginBottom: "5px" }}>Deadline Time</label>
-                  <input
-                    type="time"
-                    name="deadlineTime"
-                    value={formData.deadlineTime}
-                    onChange={handleChange}
-                    required
-                    style={{
-                      width: "100%",
-                      padding: "10px",
-                      border: "1px solid #444",
-                      borderRadius: "5px",
-                      backgroundColor: "transparent",
-                      color: "#fff",
-                    }}
-                  />
-                </div>
+              <div style={{ marginBottom: "15px" }}>
+                <label style={{ display: "block", marginBottom: "5px" }}>Deadline</label>
+                <input
+                  type="datetime-local"
+                  name="deadline"
+                  value={formData.deadline}
+                  onChange={handleChange}
+                  required
+                  style={{
+                    width: "100%",
+                    padding: "10px",
+                    border: "1px solid #444",
+                    borderRadius: "5px",
+                    backgroundColor: "transparent",
+                    color: "#fff",
+                  }}
+                />
               </div>
               <div style={{ marginBottom: "15px" }}>
                 <label style={{ display: "block", marginBottom: "5px" }}>Grade</label>
@@ -300,14 +224,14 @@ const PracticePathway = () => {
                   <option value="" disabled>
                     Choose Grade
                   </option>
-                  <option value="1">Grade 1</option>
-                  <option value="2">Grade 2</option>
-                  <option value="3">Grade 3</option>
-                  <option value="4">Grade 4</option>
-                  <option value="1">Grade 5</option>
-                  <option value="2">Grade 6</option>
-                  <option value="3">Grade 7</option>
-                  <option value="4">Grade 8</option>
+                  <option value="Grade 1">Grade 1</option>
+                  <option value="Grade 2">Grade 2</option>
+                  <option value="Grade 3">Grade 3</option>
+                  <option value="Grade 1">Grade 4</option>
+                  <option value="Grade 2">Grade 5</option>
+                  <option value="Grade 3">Grade 6</option>
+                  <option value="Grade 2">Grade 7</option>
+                  <option value="Grade 3">Grade 8</option>
                 </select>
               </div>
               <div style={{ marginBottom: "15px" }}>
@@ -344,7 +268,12 @@ const PracticePathway = () => {
                   }}
                 ></textarea>
               </div>
-              {message && <p style={{ color: "green", textAlign: "center" }}>{message}</p>}
+              {errorMessage && (
+                <p style={{ color: "red", textAlign: "center", marginBottom: "15px" }}>{errorMessage}</p>
+              )}
+              {successMessage && (
+                <p style={{ color: "green", textAlign: "center", marginBottom: "15px" }}>{successMessage}</p>
+              )}
               <div style={{ display: "flex", justifyContent: "space-between" }}>
                 <button
                   type="button"

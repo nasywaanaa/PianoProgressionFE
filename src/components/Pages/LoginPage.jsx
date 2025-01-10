@@ -1,8 +1,6 @@
-import React, { useState } from "react";
-import axios from "axios";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
-import GoogleIcon from "../../assets/GoogleIcon.png";
+import axiosInstance from "../../axiosConfig";
 import BackgroundPiano from "../../assets/BackgroundPiano.png";
 import LogoPianoProgressionRemoved from "../../assets/LogoPianoProgressionRemoved.png";
 
@@ -14,23 +12,32 @@ const LoginPage = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault(); // Mencegah reload halaman
+    setErrorMessage(""); // Reset error message
+
     try {
-      const response = await axios.post("https://api.pianoprogression.web.id/login", {
+      // Kirim permintaan login ke server
+      const response = await axiosInstance.post("/login", {
         email,
         password,
       });
 
-      // Jika login berhasil
       const { token, isAdmin } = response.data.data;
-      localStorage.setItem("token", token); // Simpan token di localStorage
+
+      // Simpan token dan admin status di localStorage
+      localStorage.setItem("token", token);
+      localStorage.setItem("isAdmin", isAdmin);
+
+      // Arahkan ke halaman berdasarkan status admin
       if (isAdmin) {
-        navigate("/admin-dashboard"); // Navigasi ke dashboard admin jika pengguna admin
+        navigate("/admin-dashboard");
       } else {
-        navigate("/landing"); // Navigasi ke halaman landing
+        navigate("/landing");
       }
     } catch (error) {
-      // Menangkap error dari backend
-      setErrorMessage(error.response?.data?.message || "Login failed. Please try again.");
+      console.error("Login failed:", error);
+      setErrorMessage(
+        error.response?.data?.message || "Login failed. Please try again."
+      );
     }
   };
 

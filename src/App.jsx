@@ -1,4 +1,5 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import PropTypes from "prop-types";
 
 // Import pages
 import LoginPage from "./components/Pages/LoginPage.jsx";
@@ -6,8 +7,16 @@ import RegisterPage from "./components/Pages/RegisterPage.jsx";
 import LandingPage from "./components/Pages/LandingPage.jsx";
 import ABRSMCurriculumPage from "./components/Pages/ABRSMCurriculumPage.jsx";
 import PracticePathway from "./components/Pages/PracticePathway.jsx";
-// import SchedulePage from "./pages/SchedulePage";
-// import TaskPage from "./pages/TaskPage";
+
+// Higher-order component for route protection
+const ProtectedRoute = ({ children }) => {
+  const token = localStorage.getItem("token");
+  return token ? children : <Navigate to="/login" />;
+};
+
+ProtectedRoute.propTypes = {
+  children: PropTypes.node.isRequired,
+};
 
 const App = () => {
   return (
@@ -29,17 +38,35 @@ const App = () => {
         `}
       </style>
       <Routes>
+        {/* Public Routes */}
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
-        <Route path="/landing" element={<LandingPage />} />
-        <Route path="/curriculum" element={<ABRSMCurriculumPage />} />
-        <Route path="/practice" element={<PracticePathway />} />
-        {/* <Route path="/" element={<Login />} /> */}
-        {/* <Route path="/login" element={<Login />} /> */}
-        {/* <Route path="/signup" element={<Signup />} /> */}
-        {/* <Route path="/tasks" element={<TaskPage />} /> */}
-        {/* <Route path="/schedule" element={<SchedulePage />} /> */}
-        {/* <Route path="/register" element={<RegisterPage />} /> */}
+
+        {/* Protected Routes */}
+        <Route
+          path="/landing"
+          element={
+            <ProtectedRoute>
+              <LandingPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/curriculum"
+          element={
+            <ProtectedRoute>
+              <ABRSMCurriculumPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/practice"
+          element={
+            <ProtectedRoute>
+              <PracticePathway />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
     </Router>
   );
